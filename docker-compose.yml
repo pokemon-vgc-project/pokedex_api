@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    command: npm run start:debug
