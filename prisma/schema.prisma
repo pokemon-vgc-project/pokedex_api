@@ -21,6 +21,61 @@ model Nature {
   @@map("natures")
 }
 
+model Ability {
+  id Int @default(autoincrement()) @id
+  name String
+  description String
+  pokemons Pokemon[] @relation("pokemons_abilities")
+  @@map("abilities")
+}
+
+model Type {
+  id Int @default(autoincrement()) @id
+  name String
+  attackerTypeStabs TypeStab[] @relation("atkTypeStabs")
+  defenderTypeStabs TypeStab[] @relation("defTypeStabs")
+  pokemons Pokemon[] @relation("pokemons_types")
+  @@map("types")
+}
+
+model TypeStab {
+  attacker Type @relation(fields: [attackerId], references: [id], name: "atkTypeStabs")
+  defender Type @relation(fields: [defenderId], references: [id], name: "defTypeStabs")
+  attackerId Int @map("attacker_id")
+  defenderId Int @map("defender_id") 
+  rate Int
+  @@id([attackerId, defenderId])
+  @@map("types_stabs")
+}
+
+model Pokemon {
+  id Int @default(autoincrement()) @id
+  num Int
+  baseSpeciesId Int @map("base_species_id")
+  name String
+  forme String?
+  heightm Float?
+  weightkg Float?
+  baseSpecies Pokemon? @relation("baseSpeciesChildren", fields: [baseSpeciesId], references: [id])
+  baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
+  pokemonBaseStats PokemonBaseStats?
+  abilities Ability[] @relation("pokemons_abilities")
+  types Type[] @relation("pokemons_types")
+  @@map("pokemons")
+}
+
+model PokemonBaseStats {
+  pokemonId Int @unique @id @map("pokemon_id")
+  pokemon Pokemon @relation(fields: [pokemonId], references: [id])
+  hp Int
+  atk Int
+  def Int
+  spa Int
+  spd Int
+  spe Int
+  @@map("pokemons_base_stats")
+}
+
 enum PokemonStatusEnum {
   ATK
   DEF
