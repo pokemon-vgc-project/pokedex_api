@@ -21,6 +21,19 @@ model Nature {
   @@map("natures")
 }
 
+model Ability {
+  id Int @default(autoincrement()) @id
+  name String
+  description String
+  @@map("abilities")
+}
+
+model Type {
+  id Int @default(autoincrement()) @id
+  name String
+  @@map("types")
+}
+
 enum PokemonStatusEnum {
   ATK
   DEF
