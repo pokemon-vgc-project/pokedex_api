@@ -46,6 +46,19 @@ model TypeStab {
   @@map("types_stabs")
 }
 
+model Pokemon {
+  id Int @default(autoincrement()) @id
+  num Int
+  baseSpeciesId Int @map("base_species_id")
+  name String
+  forme String?
+  heightm Float?
+  weightkg Float?
+  baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
+  baseSpecies Pokemon? @relation("baseSpeciesChildren", fields: [baseSpeciesId], references: [id])
+  @@map("pokemons")
+}
+
 enum PokemonStatusEnum {
   ATK
   DEF
