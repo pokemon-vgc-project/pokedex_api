@@ -65,7 +65,7 @@ model Pokemon {
 }
 
 model PokemonBaseStats {
-  pokemonId Int @unique @id
+  pokemonId Int @unique @id @map("pokemon_id")
   pokemon Pokemon @relation(fields: [pokemonId], references: [id])
   hp Int
   atk Int
