@@ -16,8 +16,8 @@ datasource db {
 model Nature {
   id Int @default(autoincrement()) @id
   name String @unique
-  increase PokemonStatusEnum
-  decrease PokemonStatusEnum
+  increase PokemonStatusEnum?
+  decrease PokemonStatusEnum?
   @@map("natures")
 }
 
