@@ -1,0 +1,12 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package pokedex;
+
+service HealthService {
+  rpc Check (google.protobuf.Empty) returns (HealthCheckDto) {}
+}
+
+message HealthCheckDto {
+  string message = 1;
+}
