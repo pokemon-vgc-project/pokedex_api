@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package pokedex;
+
+// HealthCheck Module
+service HealthService {
+  rpc Check (google.protobuf.Empty) returns (HealthCheckDto) {}
+}
+
+message HealthCheckDto {
+  string message = 1;
+}
+
+
+// Nature Module
+service NatureService {
+  rpc GetNatures (google.protobuf.Empty) returns (ResponseNatureDto) {}
+}
+
+message ResponseNatureDto {
+  repeated NatureDto data = 1;
+}
+
+message NatureDto {
+  int32 id = 1;
+  string name = 2;
+  string increase = 3;
+  string decrease = 4;
+}
