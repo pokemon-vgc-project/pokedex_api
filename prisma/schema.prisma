@@ -34,6 +34,7 @@ model Type {
   name String
   attackerTypeStabs TypeStab[] @relation("atkTypeStabs")
   defenderTypeStabs TypeStab[] @relation("defTypeStabs")
+  pokemons Pokemon[] @relation("pokemons_types")
   @@map("types")
 }
 
@@ -59,6 +60,7 @@ model Pokemon {
   baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
   pokemonBaseStats PokemonBaseStats?
   abilities Ability[] @relation("pokemons_abilities")
+  types Type[] @relation("pokemons_types")
   @@map("pokemons")
 }
 
