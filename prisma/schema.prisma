@@ -54,9 +54,22 @@ model Pokemon {
   forme String?
   heightm Float?
   weightkg Float?
-  baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
   baseSpecies Pokemon? @relation("baseSpeciesChildren", fields: [baseSpeciesId], references: [id])
+  baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
+  pokemonBaseStats PokemonBaseStats?
   @@map("pokemons")
+}
+
+model PokemonBaseStats {
+  pokemonId Int @unique @id
+  pokemon Pokemon @relation(fields: [pokemonId], references: [id])
+  hp Int
+  atk Int
+  def Int
+  spa Int
+  spd Int
+  spe Int
+  @@map("pokemons_base_stats")
 }
 
 enum PokemonStatusEnum {
