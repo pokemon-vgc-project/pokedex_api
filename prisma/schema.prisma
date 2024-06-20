@@ -79,9 +79,9 @@ model PokemonBaseStats {
 model PokemonAbility {
   pokemonId Int @map("pokemon_id")
   pokemon Pokemon @relation(fields: [pokemonId], references: [id])
-  abilityId Int @map("abilityId")
+  abilityId Int @map("ability_id")
   ability Ability @relation(fields: [abilityId], references: [id])
-  abilityType PokemonAbilityTypesEnum?
+  abilityType PokemonAbilityTypesEnum? @map("ability_type")
   @@id([pokemonId, abilityId])
   @@map("pokemons_abilities")
 }
