@@ -25,7 +25,7 @@ model Ability {
   id Int @default(autoincrement()) @id
   name String
   description String
-  pokemons Pokemon[] @relation("pokemons_abilities")
+  pokemonAbilities PokemonAbility[] @relation()
   @@map("abilities")
 }
 
@@ -51,15 +51,18 @@ model TypeStab {
 model Pokemon {
   id Int @default(autoincrement()) @id
   num Int
-  baseSpeciesId Int @map("base_species_id")
+  baseSpeciesId Int? @map("base_species_id")
   name String
   forme String?
   heightm Float?
   weightkg Float?
   baseSpecies Pokemon? @relation("baseSpeciesChildren", fields: [baseSpeciesId], references: [id])
   baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
+  evoLevel Int? @map("evo_level")
+  evolutions Pokemon[] @relation("pokemons_evolutions")
+  preEvolutions Pokemon[] @relation("pokemons_evolutions")
   pokemonBaseStats PokemonBaseStats?
-  abilities Ability[] @relation("pokemons_abilities")
+  abilities PokemonAbility[] @relation()
   types Type[] @relation("pokemons_types")
   @@map("pokemons")
 }
@@ -76,10 +79,25 @@ model PokemonBaseStats {
   @@map("pokemons_base_stats")
 }
 
+model PokemonAbility {
+  pokemonId Int @map("pokemon_id")
+  pokemon Pokemon @relation(fields: [pokemonId], references: [id])
+  abilityId Int @map("ability_id")
+  ability Ability @relation(fields: [abilityId], references: [id])
+  abilityType PokemonAbilityTypesEnum? @map("ability_type")
+  @@id([pokemonId, abilityId])
+  @@map("pokemons_abilities")
+}
+
 enum PokemonStatusEnum {
   ATK
   DEF
   SPA
   SPD
   SPE
+}
+
+enum PokemonAbilityTypesEnum {
+  HIDDEN
+  SPECIAL
 }
