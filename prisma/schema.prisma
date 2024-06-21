@@ -51,13 +51,16 @@ model TypeStab {
 model Pokemon {
   id Int @default(autoincrement()) @id
   num Int
-  baseSpeciesId Int @map("base_species_id")
+  baseSpeciesId Int? @map("base_species_id")
   name String
   forme String?
   heightm Float?
   weightkg Float?
   baseSpecies Pokemon? @relation("baseSpeciesChildren", fields: [baseSpeciesId], references: [id])
   baseSpeciesChildren Pokemon[] @relation("baseSpeciesChildren")
+  evoLevel Int? @map("evo_level")
+  evolutions Pokemon[] @relation("pokemons_evolutions")
+  preEvolutions Pokemon[] @relation("pokemons_evolutions")
   pokemonBaseStats PokemonBaseStats?
   abilities PokemonAbility[] @relation()
   types Type[] @relation("pokemons_types")
