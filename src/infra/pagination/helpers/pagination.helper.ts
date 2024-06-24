@@ -42,7 +42,7 @@ export class PaginationHelper {
     const limitValue = limit ?? total;
     const skipValue = skip ?? 0;
     const pageCount = Math.ceil(total / limitValue);
-    const currentPage = this.calculateCurrentPage(skipValue, total, limitValue);
+    const currentPage = this.calculateCurrentPage(skipValue, limitValue);
 
     return {
       page: currentPage,
@@ -54,13 +54,9 @@ export class PaginationHelper {
     };
   }
 
-  private calculateCurrentPage(
-    skip: number,
-    total: number,
-    limit: number,
-  ): number {
+  private calculateCurrentPage(skip: number, limit: number): number {
     if (skip === 0) return 1;
 
-    return Math.ceil((skip * limit) / total);
+    return Math.ceil(skip / limit);
   }
 }
