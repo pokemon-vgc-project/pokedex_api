@@ -67,16 +67,34 @@ describe('PaginationHelper', () => {
       const sut = makeSut({
         total: 91,
         limit: 9,
-        skip: 9,
+        skip: 0,
       });
 
       const { meta } = paginationHelper.makePaginationResponse(sut);
+
       expect(meta.page).toEqual(1);
       expect(meta.pageCount).toEqual(11);
       expect(meta.itemCount).toEqual(sut.total);
       expect(meta.take).toEqual(sut.skip);
       expect(meta.hasPreviousPage).toBeFalsy();
       expect(meta.hasNextPage).toBeTruthy();
+    });
+
+    it('should be on the late page with a total of 9 pages', () => {
+      const sut = makeSut({
+        total: 81,
+        limit: 10,
+        skip: 80,
+      });
+
+      const { meta } = paginationHelper.makePaginationResponse(sut);
+
+      expect(meta.page).toEqual(9);
+      expect(meta.pageCount).toEqual(9);
+      expect(meta.itemCount).toEqual(sut.total);
+      expect(meta.take).toEqual(sut.skip);
+      expect(meta.hasPreviousPage).toBeTruthy();
+      expect(meta.hasNextPage).toBeFalsy();
     });
   });
 });
