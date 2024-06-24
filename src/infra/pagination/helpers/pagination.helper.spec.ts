@@ -27,6 +27,13 @@ describe('PaginationHelper', () => {
   });
 
   describe('makePaginationResponse', () => {
+    it('should the options.data be the data', () => {
+      const sut = makeSut({ data: [1, 2, 3, 4] });
+      const { data } = paginationHelper.makePaginationResponse(sut);
+
+      expect(data).toEqual(data);
+    });
+
     it('should return the default meta value when it does not have the skip and limit', () => {
       const sut = makeSut({ total: 10, limit: undefined, skip: undefined });
       const { meta } = paginationHelper.makePaginationResponse(sut);
@@ -39,11 +46,21 @@ describe('PaginationHelper', () => {
       expect(meta.hasNextPage).toBeFalsy();
     });
 
-    it('should the options.data be the data', () => {
-      const sut = makeSut({ data: [1, 2, 3, 4] });
-      const { data } = paginationHelper.makePaginationResponse(sut);
+    it('should be on the second page with a total of 10 pages', () => {
+      const sut = makeSut({
+        total: 90,
+        limit: 9,
+        skip: 13,
+      });
 
-      expect(data).toEqual(data);
+      const { meta } = paginationHelper.makePaginationResponse(sut);
+
+      expect(meta.page).toEqual(2);
+      expect(meta.pageCount).toEqual(10);
+      expect(meta.itemCount).toEqual(sut.total);
+      expect(meta.take).toEqual(sut.skip);
+      expect(meta.hasPreviousPage).toBeTruthy();
+      expect(meta.hasNextPage).toBeTruthy();
     });
   });
 });
