@@ -5,7 +5,7 @@ import {
   PaginationMeta,
 } from '../models/pagination.model';
 
-interface MakePaginationOptions<Data> extends PaginationData<Data> {
+export interface MakePaginationOptions<Data> extends PaginationData<Data> {
   limit?: number;
   skip?: number;
 }
