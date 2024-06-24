@@ -57,6 +57,6 @@ export class PaginationHelper {
   private calculateCurrentPage(skip: number, limit: number): number {
     if (skip === 0) return 1;
 
-    return Math.ceil(skip / limit);
+    return Math.floor(skip / limit) + 1;
   }
 }
