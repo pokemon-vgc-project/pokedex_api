@@ -48,7 +48,7 @@ export class PaginationHelper {
       page: currentPage,
       pageCount,
       itemCount: total,
-      take: limitValue,
+      take: skipValue,
       hasNextPage: currentPage < pageCount,
       hasPreviousPage: currentPage > 1,
     };
