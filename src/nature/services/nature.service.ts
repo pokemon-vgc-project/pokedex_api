@@ -11,8 +11,8 @@ export class NatureService {
     return natures.map((nature) => ({
       id: nature.id,
       name: nature.name,
-      increase: nature.increase ? { value: nature.increase } : null,
-      decrease: nature.decrease ? { value: nature.decrease } : null,
+      increase: nature.increase ?? null,
+      decrease: nature.decrease ?? null,
     }));
   }
 }
