@@ -38,5 +38,12 @@ describe('PaginationHelper', () => {
       expect(meta.hasPreviousPage).toBeFalsy();
       expect(meta.hasNextPage).toBeFalsy();
     });
+
+    it('should the options.data be the data', () => {
+      const sut = makeSut({ data: [1, 2, 3, 4] });
+      const { data } = paginationHelper.makePaginationResponse(sut);
+
+      expect(data).toEqual(data);
+    });
   });
 });
