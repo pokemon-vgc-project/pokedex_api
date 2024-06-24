@@ -62,5 +62,21 @@ describe('PaginationHelper', () => {
       expect(meta.hasPreviousPage).toBeTruthy();
       expect(meta.hasNextPage).toBeTruthy();
     });
+
+    it('should be on the first page with a total of 11 pages', () => {
+      const sut = makeSut({
+        total: 91,
+        limit: 9,
+        skip: 9,
+      });
+
+      const { meta } = paginationHelper.makePaginationResponse(sut);
+      expect(meta.page).toEqual(1);
+      expect(meta.pageCount).toEqual(11);
+      expect(meta.itemCount).toEqual(sut.total);
+      expect(meta.take).toEqual(sut.skip);
+      expect(meta.hasPreviousPage).toBeFalsy();
+      expect(meta.hasNextPage).toBeTruthy();
+    });
   });
 });
