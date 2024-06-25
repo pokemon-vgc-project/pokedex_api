@@ -11,6 +11,7 @@ export interface PaginationData<Data> {
 export interface PaginationMeta {
   page: number;
   skip: number;
+  limit: number;
   itemCount: number;
   pageCount: number;
   hasPreviousPage: boolean;

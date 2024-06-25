@@ -17,10 +17,11 @@ message HealthCheckDto {
 message PaginationMeta {
   int32 page = 1;
   int32 skip = 2;
-  int32 itemCount = 3;
-  int32 pageCount = 4;
-  bool hasPreviousPage = 5;
-  bool hasNextPage = 6;
+  int32 limit = 3;
+  int32 itemCount = 4;
+  int32 pageCount = 5;
+  bool hasPreviousPage = 6;
+  bool hasNextPage = 7;
 }
 
 
