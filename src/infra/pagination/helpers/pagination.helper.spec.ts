@@ -41,7 +41,7 @@ describe('PaginationHelper', () => {
       expect(meta.page).toEqual(1);
       expect(meta.pageCount).toEqual(1);
       expect(meta.itemCount).toEqual(sut.total);
-      expect(meta.take).toEqual(sut.total);
+      expect(meta.take).toEqual(0);
       expect(meta.hasPreviousPage).toBeFalsy();
       expect(meta.hasNextPage).toBeFalsy();
     });
@@ -80,7 +80,7 @@ describe('PaginationHelper', () => {
       expect(meta.hasNextPage).toBeTruthy();
     });
 
-    it('should be on the late page with a total of 9 pages', () => {
+    it('should be on the last page with a total of 9 pages', () => {
       const sut = makeSut({
         total: 81,
         limit: 10,
@@ -95,6 +95,18 @@ describe('PaginationHelper', () => {
       expect(meta.take).toEqual(sut.skip);
       expect(meta.hasPreviousPage).toBeTruthy();
       expect(meta.hasNextPage).toBeFalsy();
+    });
+
+    it('should the take value be zero when only the skip is undefined', () => {
+      const sut = makeSut({
+        total: 81,
+        limit: 10,
+        skip: undefined,
+      });
+
+      const { meta } = paginationHelper.makePaginationResponse(sut);
+
+      expect(meta.take).toEqual(0);
     });
   });
 });
