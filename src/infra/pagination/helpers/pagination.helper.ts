@@ -36,7 +36,7 @@ export class PaginationHelper {
         itemCount: total,
         hasNextPage: false,
         hasPreviousPage: false,
-        take: total,
+        take: 0,
       };
     }
     const limitValue = limit ?? total;
