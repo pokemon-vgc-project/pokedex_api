@@ -17,6 +17,7 @@ services:
     command: npm run start:debug
     networks:
       - pokedex-network
+      - api-gateway-network
       - backend-network
     depends_on:
       - db
@@ -34,6 +35,9 @@ services:
     networks:
       - backend-network
 networks:
+  api-gateway-network:
+    name: apiGatewayNetwork
+    external: true
   pokedex-network:
   backend-network:
 volumes:
