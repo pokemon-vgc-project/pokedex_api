@@ -27,7 +27,12 @@ message PaginationMeta {
 
 // Nature Module
 service NatureService {
-  rpc GetNatures (google.protobuf.Empty) returns (ResponseNatureDto) {}
+  rpc GetNatures (GetNaturesOptions) returns (ResponseNatureDto) {}
+}
+
+message GetNaturesOptions {
+  optional int32 skip = 1;
+  optional int32 limit = 2;
 }
 
 message ResponseNatureDto {

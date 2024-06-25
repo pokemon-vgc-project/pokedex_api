@@ -13,12 +13,24 @@ export class NatureController implements pokedex.NatureService {
   ) {}
 
   @GrpcMethod('NatureService', 'GetNatures')
-  getNatures(): Observable<pokedex.ResponseNatureDto> {
-    return from(this.natureService.getList()).pipe(
+  getNatures({
+    limit,
+    skip,
+  }: pokedex.GetNaturesOptions): Observable<pokedex.ResponseNatureDto> {
+    return from(
+      this.natureService.getList({
+        pagination: {
+          limit,
+          skip,
+        },
+      }),
+    ).pipe(
       map(({ data, total }) =>
         this.paginationHelper.makePaginationResponse({
           data,
           total,
+          limit,
+          skip,
         }),
       ),
     );
