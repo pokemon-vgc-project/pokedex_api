@@ -36,7 +36,7 @@ export class PaginationHelper {
         itemCount: total,
         hasNextPage: false,
         hasPreviousPage: false,
-        take: 0,
+        skip: 0,
       };
     }
     const limitValue = limit ?? total;
@@ -48,7 +48,7 @@ export class PaginationHelper {
       page: currentPage,
       pageCount,
       itemCount: total,
-      take: skipValue,
+      skip: skipValue,
       hasNextPage: currentPage < pageCount,
       hasPreviousPage: currentPage > 1,
     };

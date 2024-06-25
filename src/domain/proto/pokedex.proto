@@ -16,7 +16,7 @@ message HealthCheckDto {
 // Pagination
 message PaginationMeta {
   int32 page = 1;
-  int32 take = 2;
+  int32 skip = 2;
   int32 itemCount = 3;
   int32 pageCount = 4;
   bool hasPreviousPage = 5;

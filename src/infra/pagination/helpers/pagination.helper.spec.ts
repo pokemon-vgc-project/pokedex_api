@@ -41,7 +41,7 @@ describe('PaginationHelper', () => {
       expect(meta.page).toEqual(1);
       expect(meta.pageCount).toEqual(1);
       expect(meta.itemCount).toEqual(sut.total);
-      expect(meta.take).toEqual(0);
+      expect(meta.skip).toEqual(0);
       expect(meta.hasPreviousPage).toBeFalsy();
       expect(meta.hasNextPage).toBeFalsy();
     });
@@ -58,7 +58,7 @@ describe('PaginationHelper', () => {
       expect(meta.page).toEqual(2);
       expect(meta.pageCount).toEqual(10);
       expect(meta.itemCount).toEqual(sut.total);
-      expect(meta.take).toEqual(sut.skip);
+      expect(meta.skip).toEqual(sut.skip);
       expect(meta.hasPreviousPage).toBeTruthy();
       expect(meta.hasNextPage).toBeTruthy();
     });
@@ -75,7 +75,7 @@ describe('PaginationHelper', () => {
       expect(meta.page).toEqual(1);
       expect(meta.pageCount).toEqual(11);
       expect(meta.itemCount).toEqual(sut.total);
-      expect(meta.take).toEqual(sut.skip);
+      expect(meta.skip).toEqual(sut.skip);
       expect(meta.hasPreviousPage).toBeFalsy();
       expect(meta.hasNextPage).toBeTruthy();
     });
@@ -92,12 +92,12 @@ describe('PaginationHelper', () => {
       expect(meta.page).toEqual(9);
       expect(meta.pageCount).toEqual(9);
       expect(meta.itemCount).toEqual(sut.total);
-      expect(meta.take).toEqual(sut.skip);
+      expect(meta.skip).toEqual(sut.skip);
       expect(meta.hasPreviousPage).toBeTruthy();
       expect(meta.hasNextPage).toBeFalsy();
     });
 
-    it('should the take value be zero when only the skip is undefined', () => {
+    it('should the skip value be zero when only the skip is undefined', () => {
       const sut = makeSut({
         total: 81,
         limit: 10,
@@ -106,7 +106,7 @@ describe('PaginationHelper', () => {
 
       const { meta } = paginationHelper.makePaginationResponse(sut);
 
-      expect(meta.take).toEqual(0);
+      expect(meta.skip).toEqual(0);
     });
   });
 });
