@@ -122,7 +122,15 @@ describe('PaginationHelper', () => {
 
       const { meta } = paginationHelper.makePaginationResponse(sut);
 
-      expect(meta.limit).toEqual(50);
+      expect(meta.limit).toEqual(sut.total);
+    });
+
+    it('should the itemCount value be the total', () => {
+      const sut = makeSut({ limit: undefined, total: 27 });
+
+      const { meta } = paginationHelper.makePaginationResponse(sut);
+
+      expect(meta.itemCount).toEqual(sut.total);
     });
   });
 });
