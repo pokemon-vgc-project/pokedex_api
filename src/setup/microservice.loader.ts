@@ -15,7 +15,12 @@ export const loadMicroservice = async (): Promise<INestMicroservice> => {
 
   // Get the host env vars
   const configService = appContext.get<ConfigService>(ConfigService);
-  const { host, port } = configService.get<HttpSetup>(configLoaderEnum.HTTP);
+  const httpSetup = configService.get<HttpSetup>(configLoaderEnum.HTTP);
+
+  if (!httpSetup) {
+    throw new Error('error to find the httpSetup');
+  }
+
   appContext.close();
 
   const protoPath = join(__dirname, '../domain/proto/pokedex.proto');
@@ -25,7 +30,7 @@ export const loadMicroservice = async (): Promise<INestMicroservice> => {
     await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
       transport: Transport.GRPC,
       options: {
-        url: `${host}:${port}`,
+        url: `${httpSetup.host}:${httpSetup.port}`,
         package: 'pokedex',
         protoPath,
       },
