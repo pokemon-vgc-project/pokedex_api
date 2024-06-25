@@ -29,17 +29,6 @@ export class PaginationHelper {
     skip,
     total,
   }: MakePaginationMetaOptions): PaginationMeta {
-    if (!skip && !limit) {
-      return {
-        page: 1,
-        pageCount: 1,
-        itemCount: total,
-        hasNextPage: false,
-        hasPreviousPage: false,
-        skip: 0,
-        limit: total,
-      };
-    }
     const limitValue = limit ?? total;
     const skipValue = skip ?? 0;
     const pageCount = Math.ceil(total / limitValue);
