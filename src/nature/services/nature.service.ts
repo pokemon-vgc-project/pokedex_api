@@ -29,14 +29,15 @@ export class NatureService {
       this.prismaService.nature.count(),
     ]);
 
-    return {
+    const result: PaginationData<pokedex.NatureDto[]> = {
       data: natures.map((nature) => ({
         id: nature.id,
         name: nature.name,
         increase: nature.increase ?? null,
         decrease: nature.decrease ?? null,
-      })),
+      })) as pokedex.NatureDto[],
       total,
     };
+    return result;
   }
 }
