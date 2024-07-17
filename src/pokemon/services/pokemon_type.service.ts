@@ -29,6 +29,7 @@ export class PokemonTypeService {
       take: limit,
       skip,
       where,
+      orderBy: { name: 'asc' },
     };
 
     const [types, total] = await this.prismaService.$transaction([
