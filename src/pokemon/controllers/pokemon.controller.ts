@@ -4,6 +4,10 @@ import { from, map, Observable } from 'rxjs';
 import { pokedex } from 'src/domain/proto/pokedex';
 import { PokemonTypeService } from '../services/pokemon_type.service';
 import { PaginationHelper } from 'src/infra/pagination/helpers/pagination.helper';
+import {
+  PokedexServices,
+  PokemonServiceMethods,
+} from '@pokemon-vgc-project/lib-proto';
 
 @Controller()
 export class PokemonController implements pokedex.PokemonService {
@@ -12,7 +16,10 @@ export class PokemonController implements pokedex.PokemonService {
     private readonly paginationHelper: PaginationHelper,
   ) {}
 
-  @GrpcMethod('PokemonService', 'GetPokemonTypes')
+  @GrpcMethod(
+    PokedexServices.POKEMON_SERVICE,
+    PokemonServiceMethods.GET_POKEMON_TYPES,
+  )
   getPokemonTypes({
     limit,
     skip,
