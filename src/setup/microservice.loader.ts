@@ -23,7 +23,10 @@ export const loadMicroservice = async (): Promise<INestMicroservice> => {
 
   appContext.close();
 
-  const protoPath = join(__dirname, '../domain/proto/pokedex.proto');
+  const protoPath = join(
+    __dirname,
+    '../../node_modules/@pokemon-vgc-project/lib-proto/proto/pokedex.proto',
+  );
 
   // Setup the microservice
   const microservice =
