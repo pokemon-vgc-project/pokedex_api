@@ -56,4 +56,4 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 #Built proto files
-/src/domain/proto/*.ts
+/src/domain/proto/**/*.ts

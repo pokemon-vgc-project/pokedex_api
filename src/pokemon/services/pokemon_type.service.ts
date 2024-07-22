@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
-import { pokedex } from '../../domain/proto/pokedex';
 import {
   PaginationData,
   PaginationOptions,
 } from '../../infra/pagination/models/pagination.model';
 import { PrismaService } from '../../infra/prisma/prisma.service';
+import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 
 interface GetTypesOptions {
   pagination?: PaginationOptions;

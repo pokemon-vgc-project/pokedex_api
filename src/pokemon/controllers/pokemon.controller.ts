@@ -1,13 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { from, map, Observable } from 'rxjs';
-import { pokedex } from 'src/domain/proto/pokedex';
 import { PokemonTypeService } from '../services/pokemon_type.service';
 import { PaginationHelper } from 'src/infra/pagination/helpers/pagination.helper';
 import {
   PokedexServices,
   PokemonServiceMethods,
 } from '@pokemon-vgc-project/lib-proto';
+import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 
 @Controller()
 export class PokemonController implements pokedex.PokemonService {

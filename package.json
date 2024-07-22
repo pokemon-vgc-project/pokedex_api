@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build && npm run proto:install",
-    "proto:install": "tsproto --path \"./node_modules/@pokemon-vgc-project/lib-proto/proto\"",
+    "proto:install": "tsproto --path \"./node_modules/@pokemon-vgc-project/lib-proto/proto\" --output \"./src/domain/proto\" ",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
