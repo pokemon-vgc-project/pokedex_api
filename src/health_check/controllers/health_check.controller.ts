@@ -1,11 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { pokedex } from '../../domain/proto/pokedex';
 import { Observable, of } from 'rxjs';
 import {
   HealthServiceMethods,
   SharedServices,
 } from '@pokemon-vgc-project/lib-proto';
+import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 
 @Controller()
 export class HealthCheckController implements pokedex.HealthService {

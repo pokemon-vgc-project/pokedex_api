@@ -1,5 +1,4 @@
 import { Observable, from, map } from 'rxjs';
-import { pokedex } from '../../domain/proto/pokedex';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Controller } from '@nestjs/common';
 import { NatureService } from '../services/nature.service';
@@ -8,6 +7,7 @@ import {
   NatureServiceMethods,
   PokedexServices,
 } from '@pokemon-vgc-project/lib-proto';
+import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 
 @Controller()
 export class NatureController implements pokedex.NatureService {
