@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build && npm run proto:install",
-    "proto:install": "tsproto --path \"./src/domain/proto\"",
+    "proto:install": "tsproto --path \"./node_modules/@pokemon-vgc-project/lib-proto/proto\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -27,6 +27,7 @@
     "prisma:generate": "npx prisma generate"
   },
   "dependencies": {
+    "@pokemon-vgc-project/lib-proto": "git+ssh://github.com/pokemon-vgc-project/lib-proto.git#0.0.2",
     "@grpc/grpc-js": "^1.10.8",
     "@grpc/proto-loader": "^0.7.13",
     "@nestjs/common": "^10.0.0",

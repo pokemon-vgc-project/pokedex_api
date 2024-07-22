@@ -7,6 +7,7 @@ import { configLoaderEnum } from './config/config.loader';
 import { AppModule } from '../app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { PACKAGE_NAME } from '@pokemon-vgc-project/lib-proto';
 
 export const loadMicroservice = async (): Promise<INestMicroservice> => {
   // TODO: Remove when the following is fixed https://github.com/nestjs/nest/issues/2343
@@ -23,7 +24,10 @@ export const loadMicroservice = async (): Promise<INestMicroservice> => {
 
   appContext.close();
 
-  const protoPath = join(__dirname, '../domain/proto/pokedex.proto');
+  const protoPath = join(
+    __dirname,
+    '../../node_modules/@pokemon-vgc-project/lib-proto/proto/pokedex.proto',
+  );
 
   // Setup the microservice
   const microservice =
@@ -31,7 +35,7 @@ export const loadMicroservice = async (): Promise<INestMicroservice> => {
       transport: Transport.GRPC,
       options: {
         url: `${httpSetup.host}:${httpSetup.port}`,
-        package: 'pokedex',
+        package: PACKAGE_NAME,
         protoPath,
       },
     });

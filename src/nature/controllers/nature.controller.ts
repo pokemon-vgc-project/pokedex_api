@@ -4,6 +4,10 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { Controller } from '@nestjs/common';
 import { NatureService } from '../services/nature.service';
 import { PaginationHelper } from 'src/infra/pagination/helpers/pagination.helper';
+import {
+  NatureServiceMethods,
+  PokedexServices,
+} from '@pokemon-vgc-project/lib-proto';
 
 @Controller()
 export class NatureController implements pokedex.NatureService {
@@ -12,7 +16,7 @@ export class NatureController implements pokedex.NatureService {
     private readonly paginationHelper: PaginationHelper,
   ) {}
 
-  @GrpcMethod('NatureService', 'GetNatures')
+  @GrpcMethod(PokedexServices.NATURE_SERVICE, NatureServiceMethods.GET_NATURES)
   getNatures({
     limit,
     skip,
