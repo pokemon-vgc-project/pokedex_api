@@ -69,10 +69,11 @@ export class PokemonService {
 
   async getPokemons({
     pagination: { limit, skip } = {},
+    filters = {},
   }: GetPokemonsOptions = {}): Promise<PaginationData<pokedex.PokemonDto[]>> {
-    const defaultQuery: Prisma.PokemonFindManyArgs<DefaultArgs> = {};
+    const where: Prisma.PokemonWhereInput = this.getPokemonsWhere(filters);
     const query: Prisma.PokemonFindManyArgs<DefaultArgs> = {
-      ...defaultQuery,
+      where,
       include: {
         abilities: {
           include: {
@@ -87,11 +88,29 @@ export class PokemonService {
     };
     const [pokemons, total] = await this.prismaService.$transaction([
       this.prismaService.pokemon.findMany(query),
-      this.prismaService.pokemon.count(),
+      this.prismaService.pokemon.count({ where }),
     ]);
     return {
       data: pokemons.map(convertPokemonDbIntoDto),
       total: total,
     };
+  }
+
+  private getPokemonsWhere(
+    filters: GetPokemonsFiltersOptions = {},
+  ): Prisma.PokemonWhereInput {
+    const where: Prisma.PokemonWhereInput = {};
+
+    if (Array.isArray(filters.abilities) && filters.abilities.length) {
+      where.abilities = {
+        some: {
+          abilityId: {
+            in: filters.abilities,
+          },
+        },
+      };
+    }
+
+    return where;
   }
 }
