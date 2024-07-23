@@ -1,4 +1,4 @@
 export interface FilterNumberOptions {
-  start: number;
+  start?: number;
   end?: number;
 }

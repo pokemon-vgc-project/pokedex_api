@@ -10,6 +10,7 @@ import { FilterNumberOptions } from '../../domain/shared/filters.interface';
 import { Sort } from '../../domain/shared/sort.interface';
 import { pokedex } from '../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import { convertPokemonDbIntoDto } from '../mappers/pokemon.mapper';
+import { getNumberFilter } from 'src/shared/helpers/filter.helper';
 
 interface GetFormsOptions {
   pagination?: PaginationOptions;
@@ -115,6 +116,10 @@ export class PokemonService {
       where.forme = {
         in: filters.forms,
       };
+    }
+
+    if (filters.heightm && Object.keys(filters.heightm).length > 0) {
+      where.heightm = getNumberFilter(filters.heightm);
     }
 
     return where;
