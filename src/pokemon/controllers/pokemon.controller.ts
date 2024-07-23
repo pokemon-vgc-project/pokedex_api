@@ -62,8 +62,9 @@ export class PokemonController implements pokedex.PokemonService {
   )
   getPokemons({
     pagination,
+    filters,
   }: pokedex.GetPokemonsOptions): Observable<pokedex.ResponsePokemonsDto> {
-    return from(this.pokemonService.getPokemons({ pagination })).pipe(
+    return from(this.pokemonService.getPokemons({ pagination, filters })).pipe(
       map(({ data, total }) =>
         this.paginationHelper.makePaginationResponse({
           data,
