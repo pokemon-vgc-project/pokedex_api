@@ -55,4 +55,23 @@ export class PokemonController implements pokedex.PokemonService {
       ),
     );
   }
+
+  @GrpcMethod(
+    PokedexServices.POKEMON_SERVICE,
+    PokemonServiceMethods.GET_POKEMONS,
+  )
+  getPokemons({
+    pagination,
+  }: pokedex.GetPokemonsOptions): Observable<pokedex.ResponsePokemonsDto> {
+    return from(this.pokemonService.getPokemons({ pagination })).pipe(
+      map(({ data, total }) =>
+        this.paginationHelper.makePaginationResponse({
+          data,
+          total,
+          limit: pagination?.limit,
+          skip: pagination?.skip,
+        }),
+      ),
+    );
+  }
 }
