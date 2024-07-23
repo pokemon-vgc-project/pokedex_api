@@ -111,6 +111,12 @@ export class PokemonService {
       };
     }
 
+    if (Array.isArray(filters.forms) && filters.forms.length) {
+      where.forme = {
+        in: filters.forms,
+      };
+    }
+
     return where;
   }
 }
