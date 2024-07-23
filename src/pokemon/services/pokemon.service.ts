@@ -67,26 +67,31 @@ export class PokemonService {
     };
   }
 
-  async getPokemons({}: GetPokemonsOptions = {}): Promise<
-    PaginationData<pokedex.PokemonDto[]>
-  > {
-    const [pokemons, total] = await this.prismaService.$transaction([
-      this.prismaService.pokemon.findMany({
-        include: {
-          abilities: {
-            include: {
-              ability: true,
-            },
+  async getPokemons({
+    pagination: { limit, skip } = {},
+  }: GetPokemonsOptions = {}): Promise<PaginationData<pokedex.PokemonDto[]>> {
+    const defaultQuery: Prisma.PokemonFindManyArgs<DefaultArgs> = {};
+    const query: Prisma.PokemonFindManyArgs<DefaultArgs> = {
+      ...defaultQuery,
+      include: {
+        abilities: {
+          include: {
+            ability: true,
           },
-          pokemonBaseStats: true,
-          types: true,
         },
-      }),
+        pokemonBaseStats: true,
+        types: true,
+      },
+      take: limit,
+      skip,
+    };
+    const [pokemons, total] = await this.prismaService.$transaction([
+      this.prismaService.pokemon.findMany(query),
       this.prismaService.pokemon.count(),
     ]);
     return {
       data: pokemons.map(convertPokemonDbIntoDto),
-      total,
+      total: total,
     };
   }
 }
