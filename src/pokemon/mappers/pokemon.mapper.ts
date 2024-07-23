@@ -22,6 +22,7 @@ export const convertPokemonDbIntoDto = (pkm: Pokemon): pokedex.PokemonDto => {
   return {
     id: pkm.id,
     num: pkm.num,
+    name: pkm.name,
     form: pkm.forme ?? undefined,
     heightm: pkm.heightm ?? undefined,
     weightkg: pkm.weightkg ?? undefined,
