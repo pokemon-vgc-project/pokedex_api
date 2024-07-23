@@ -122,6 +122,10 @@ export class PokemonService {
       where.heightm = getNumberFilter(filters.heightm);
     }
 
+    if (filters.weightkg && Object.keys(filters.weightkg).length > 0) {
+      where.weightkg = getNumberFilter(filters.weightkg);
+    }
+
     return where;
   }
 }
