@@ -23,18 +23,15 @@ export class PokemonController implements pokedex.PokemonService {
     PokemonServiceMethods.GET_POKEMON_TYPES,
   )
   getPokemonTypes({
-    limit,
-    skip,
+    pagination,
   }: pokedex.GetTypesOptions): Observable<pokedex.ResponsePokemonTypesDto> {
-    return from(
-      this.pokemonTypeService.getTypes({ pagination: { limit, skip } }),
-    ).pipe(
+    return from(this.pokemonTypeService.getTypes({ pagination })).pipe(
       map(({ data, total }) =>
         this.paginationHelper.makePaginationResponse({
           data,
           total,
-          limit,
-          skip,
+          limit: pagination?.limit,
+          skip: pagination?.skip,
         }),
       ),
     );
@@ -45,18 +42,15 @@ export class PokemonController implements pokedex.PokemonService {
     PokemonServiceMethods.GET_POKEMON_FORMS,
   )
   getPokemonForms({
-    limit,
-    skip,
+    pagination,
   }: pokedex.GetPokemonFormsOptions): Observable<pokedex.ResponsePokemonFormsDto> {
-    return from(
-      this.pokemonService.getFormes({ pagination: { limit, skip } }),
-    ).pipe(
+    return from(this.pokemonService.getFormes({ pagination })).pipe(
       map(({ data, total }) =>
         this.paginationHelper.makePaginationResponse({
           data,
           total,
-          limit,
-          skip,
+          limit: pagination?.limit,
+          skip: pagination?.skip,
         }),
       ),
     );
