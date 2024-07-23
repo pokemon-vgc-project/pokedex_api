@@ -136,6 +136,11 @@ export class PokemonService {
       where.num = getNumberFilter(filters.pokemonNum);
     }
 
+    if (filters.name) {
+      where.name = {
+        contains: filters.name,
+      };
+    }
     return where;
   }
 }
