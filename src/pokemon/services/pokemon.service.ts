@@ -105,9 +105,7 @@ export class PokemonService {
     if (Array.isArray(filters.abilities) && filters.abilities.length) {
       where.abilities = {
         some: {
-          abilityId: {
-            in: filters.abilities,
-          },
+          abilityId: { in: filters.abilities },
         },
       };
     }
@@ -115,6 +113,14 @@ export class PokemonService {
     if (Array.isArray(filters.forms) && filters.forms.length) {
       where.forme = {
         in: filters.forms,
+      };
+    }
+
+    if (Array.isArray(filters.types) && filters.types.length) {
+      where.types = {
+        some: {
+          id: { in: filters.types },
+        },
       };
     }
 
