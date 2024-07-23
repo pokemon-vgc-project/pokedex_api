@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { pokedex } from '../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
+import { getFloatNumberPattern } from 'src/shared/helpers/math.helper';
 export type Pokemon = Prisma.PokemonGetPayload<{
   include: {
     abilities: {
@@ -24,8 +25,14 @@ export const convertPokemonDbIntoDto = (pkm: Pokemon): pokedex.PokemonDto => {
     num: pkm.num,
     name: pkm.name,
     form: pkm.forme ?? undefined,
-    heightm: pkm.heightm ?? undefined,
-    weightkg: pkm.weightkg ?? undefined,
+    heightm:
+      pkm.heightm && !isNaN(pkm.heightm)
+        ? getFloatNumberPattern(pkm.heightm)
+        : undefined,
+    weightkg:
+      pkm.weightkg && !isNaN(pkm.weightkg)
+        ? getFloatNumberPattern(pkm.weightkg)
+        : undefined,
     baseSpeciesId: pkm.baseSpeciesId ?? undefined,
     baseStats: {
       hp: pkm.pokemonBaseStats?.hp,
