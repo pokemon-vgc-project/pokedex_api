@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { pokedex } from '../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
-import { getFloatNumberPattern } from 'src/shared/helpers/math.helper';
+import { getFloatNumberPattern } from '../../shared/helpers/math.helper';
 export type Pokemon = Prisma.PokemonGetPayload<{
   include: {
     abilities: {

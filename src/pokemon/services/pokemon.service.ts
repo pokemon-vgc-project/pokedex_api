@@ -10,7 +10,7 @@ import { FilterNumberOptions } from '../../domain/shared/filters.interface';
 import { Sort } from '../../domain/shared/sort.interface';
 import { pokedex } from '../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import { convertPokemonDbIntoDto } from '../mappers/pokemon.mapper';
-import { getNumberFilter } from 'src/shared/helpers/filter.helper';
+import { getNumberFilter } from '../../shared/helpers/filter.helper';
 
 interface GetFormsOptions {
   pagination?: PaginationOptions;
