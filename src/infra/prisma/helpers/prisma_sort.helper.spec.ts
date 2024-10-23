@@ -14,7 +14,7 @@ describe('PrismaSortHelper', () => {
   });
 
   describe('makeOrderBy', () => {
-    it('should returns an object with age prop', () => {
+    it('should returns an object array with age prop', () => {
       const sut: SortDto[] = [
         {
           name: 'age',
@@ -22,9 +22,9 @@ describe('PrismaSortHelper', () => {
         },
       ];
 
-      const fn: HelperFn = (orderByDto, { name, order }) => {
+      const fn: HelperFn = (orderByDtos, { name, order }) => {
         if (name === 'age') {
-          orderByDto.age = order;
+          orderByDtos.push({ age: order });
         }
       };
 
@@ -32,8 +32,40 @@ describe('PrismaSortHelper', () => {
 
       expect(result).not.toBeUndefined();
       if (result) {
-        expect(result).toHaveProperty('age');
-        expect(result.age).toEqual('desc');
+        expect(result[0]).toHaveProperty('age');
+        expect(result[0].age).toEqual('desc');
+      }
+    });
+
+    it('should return multiple filters', () => {
+      const sut: SortDto[] = [
+        {
+          name: 'age',
+          order: 'desc',
+        },
+        {
+          name: 'name',
+          order: 'asc',
+        },
+      ];
+
+      const fn: HelperFn = (orderByDtos, { name, order }) => {
+        if (name === 'age') {
+          orderByDtos.push({ age: order });
+        } else if (name === 'name') {
+          orderByDtos.push({ name: order });
+        }
+      };
+
+      const result = prismaSortHelper.makeOrderBy(fn, sut);
+
+      expect(result).not.toBeUndefined();
+      if (result) {
+        expect(result.length).toEqual(2);
+        expect(result[0]).toHaveProperty('age');
+        expect(result[0].age).toEqual('desc');
+        expect(result[1]).toHaveProperty('name');
+        expect(result[1].name).toEqual('asc');
       }
     });
 
@@ -46,9 +78,9 @@ describe('PrismaSortHelper', () => {
         },
       ];
 
-      const fn: HelperFn = (orderByDto, { name, order, subparameter }) => {
+      const fn: HelperFn = (orderByDtos, { name, order, subparameter }) => {
         if (name === 'stats' && subparameter === 'atk') {
-          orderByDto.atk = order;
+          orderByDtos.push({ atk: order });
         }
       };
 
@@ -56,8 +88,8 @@ describe('PrismaSortHelper', () => {
 
       expect(result).not.toBeUndefined();
       if (result) {
-        expect(result).toHaveProperty('atk');
-        expect(result.atk).toEqual('asc');
+        expect(result[0]).toHaveProperty('atk');
+        expect(result[0].atk).toEqual('asc');
       }
     });
 
@@ -69,9 +101,9 @@ describe('PrismaSortHelper', () => {
         },
       ];
 
-      const fn: HelperFn = (orderByDto, { name, order }) => {
+      const fn: HelperFn = (orderByDtos, { name, order }) => {
         if (name === 'atk') {
-          orderByDto.atk = order;
+          orderByDtos.push({ atk: order });
         }
       };
 
@@ -80,9 +112,9 @@ describe('PrismaSortHelper', () => {
     });
 
     it('should returns undefined when the sortDto list is undefined', () => {
-      const fn: HelperFn = (orderByDto, { name, order }) => {
+      const fn: HelperFn = (orderByDtos, { name, order }) => {
         if (name === 'atk') {
-          orderByDto.atk = order;
+          orderByDtos.push({ atk: order });
         }
       };
 
