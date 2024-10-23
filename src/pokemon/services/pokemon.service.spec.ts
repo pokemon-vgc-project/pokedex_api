@@ -3,6 +3,8 @@ import { PokemonService } from './pokemon.service';
 import { PrismaClient } from '@prisma/client';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../infra/prisma/prisma.service';
+import { PrismaSortHelper } from '../../infra/prisma/helpers/prisma_sort.helper';
+import { SortHelper } from '../../infra/sort/helpers/sort.helper';
 
 const makeSutPokemonFormes = () => {
   return [
@@ -27,6 +29,8 @@ describe('PokemonService', () => {
           provide: PrismaService,
           useValue: prismaMock,
         },
+        PrismaSortHelper,
+        SortHelper,
       ],
     }).compile();
 
