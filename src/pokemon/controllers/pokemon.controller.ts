@@ -2,13 +2,14 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { from, map, Observable } from 'rxjs';
 import { PokemonTypeService } from '../services/pokemon_type.service';
-import { PaginationHelper } from 'src/infra/pagination/helpers/pagination.helper';
+import { PaginationHelper } from '../../infra/pagination/helpers/pagination.helper';
 import {
   PokedexServices,
   PokemonServiceMethods,
 } from '@pokemon-vgc-project/lib-proto';
-import { pokedex } from 'src/domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
+import { pokedex } from '../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import { PokemonService } from '../services/pokemon.service';
+import { Sort } from '../../domain/shared/sort.interface';
 
 @Controller()
 export class PokemonController implements pokedex.PokemonService {
@@ -63,8 +64,16 @@ export class PokemonController implements pokedex.PokemonService {
   getPokemons({
     pagination,
     filters,
+    sorts,
   }: pokedex.GetPokemonsOptions): Observable<pokedex.ResponsePokemonsDto> {
-    return from(this.pokemonService.getPokemons({ pagination, filters })).pipe(
+    const optionSorts = sorts as unknown as Sort[];
+    return from(
+      this.pokemonService.getPokemons({
+        pagination,
+        filters,
+        sorts: optionSorts,
+      }),
+    ).pipe(
       map(({ data, total }) =>
         this.paginationHelper.makePaginationResponse({
           data,

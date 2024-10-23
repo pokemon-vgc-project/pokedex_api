@@ -11,6 +11,9 @@ import { Sort } from '../../domain/shared/sort.interface';
 import { pokedex } from '../../domain/proto/@pokemon-vgc-project/lib-proto/proto/pokedex';
 import { convertPokemonDbIntoDto } from '../mappers/pokemon.mapper';
 import { getNumberFilter } from '../../shared/helpers/filter.helper';
+import { PrismaSortHelper } from '../../infra/prisma/helpers/prisma_sort.helper';
+import { pokemonSortHelperFn } from '../helpers/pokemon_sort.helper';
+import { SortHelper } from '../../infra/sort/helpers/sort.helper';
 
 interface GetFormsOptions {
   pagination?: PaginationOptions;
@@ -33,7 +36,11 @@ interface GetPokemonsOptions {
 
 @Injectable()
 export class PokemonService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly prismaSortHelper: PrismaSortHelper,
+    private readonly sortHelper: SortHelper,
+  ) {}
 
   async getFormes({
     pagination: { limit, skip } = {},
@@ -71,7 +78,12 @@ export class PokemonService {
   async getPokemons({
     pagination: { limit, skip } = {},
     filters = {},
+    sorts,
   }: GetPokemonsOptions = {}): Promise<PaginationData<pokedex.PokemonDto[]>> {
+    const sortDtos = Array.isArray(sorts)
+      ? sorts.map((sort) => this.sortHelper.makeSortData(sort))
+      : undefined;
+
     const where: Prisma.PokemonWhereInput = this.getPokemonsWhere(filters);
     const query: Prisma.PokemonFindManyArgs<DefaultArgs> = {
       where,
@@ -84,6 +96,7 @@ export class PokemonService {
         pokemonBaseStats: true,
         types: true,
       },
+      orderBy: this.prismaSortHelper.makeOrderBy(pokemonSortHelperFn, sortDtos),
       take: limit,
       skip,
     };
