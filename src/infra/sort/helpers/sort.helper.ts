@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { SortDto } from '../models/sort.model';
 
 export interface GetSortData {
@@ -10,6 +11,7 @@ interface GetNameAndSubparameterReturn {
   subparameter?: string;
 }
 
+@Injectable()
 export class SortHelper {
   makeSortData({ name, order }: GetSortData): SortDto {
     return {

@@ -1,8 +1,10 @@
+import { Injectable } from '@nestjs/common';
 import { SortDto } from '../../sort/models/sort.model';
 import { PrismaOrderBy } from '../types/prisma.type';
 
 export type HelperFn = (orderByDto: PrismaOrderBy, sortDto: SortDto) => void;
 
+@Injectable()
 export class PrismaSortHelper {
   makeOrderBy(
     helperFn: HelperFn,
