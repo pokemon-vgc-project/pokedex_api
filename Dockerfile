@@ -3,14 +3,13 @@ FROM node:22
 # Create app directory
 WORKDIR /app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
-COPY prisma ./prisma/
-
-#Install app dependencies
-RUN npm install
-
 COPY . . 
-RUN npm run build 
-RUN npm run proto:install
+
+RUN if [ "$APP_ENV" = "production" ]; then \
+        /app/builds/scripts/production-build.sh; \
+    fi
+
+RUN chown -R node:node /app
+USER node
+
 CMD [ "npm", "run", "start" ]
