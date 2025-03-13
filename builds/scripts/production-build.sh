@@ -2,12 +2,9 @@
 set -e
 
 # Install dependencies
-npm install --production && \
+npm install --include=dev && \
 npm run build && \
-npm run proto:install;
+npm ci --omit=dev;
 
 # Add the git version file and clean up
-echo "Version: ${GIT_COMMIT}" > .km_version &&\
-apt-get clean && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-rm -f /usr/bin/apt-get /usr/bin/apt;\
+echo "Version: ${GIT_COMMIT}" > .git_hash;
